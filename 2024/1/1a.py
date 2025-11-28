@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from shared.io import splitread
 
-left, right = splitread('db.txt')
+left, right = splitread('db.txt', '   ')
 
 output = []
 
