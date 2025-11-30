@@ -4,6 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from shared.io import textread
+from lib6 import next_pos
 
 map = [list(row) for row in textread('db.txt')]
 directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -15,11 +16,6 @@ for i, line in enumerate(map):
 
 pointing = 0
 position = start
-
-def next_pos(position, pointing):
-    x, y = position
-    dx, dy = directions[pointing % 4]
-    return (x+dx, y-dy)
 
 nx, ny = next_pos(position, pointing)
 
