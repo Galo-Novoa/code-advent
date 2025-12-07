@@ -33,3 +33,13 @@ def splitpage(filename):
             aux.append(line.strip())
         output.append(aux)
         return output
+
+def dictread(filename):
+    with open(filename, 'r') as file:
+        output = {}
+        for line in file:
+            data = line.strip().split()
+            key = int(data[0].strip(':'))
+            value = [int(d) for d in data[1:]]
+            output[key] = value
+        return output
