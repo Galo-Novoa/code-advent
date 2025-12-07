@@ -1,25 +1,30 @@
-from guard import guard, map_grid, obs_positions
+from concurrent.futures import ProcessPoolExecutor
+from guard import guard, map_grid
 
 for i, line in enumerate(map_grid):
     if '^' in line:
         start = (line.index('^'), i)
+        map_grid[i][start[0]] = '.'
         break
 
 main_guard = guard(start, 0)
-main_guard.patrol()
+main_guard.patrol(map_grid)
 
-output = 0
+map_grid = tuple(tuple(row) for row in map_grid)
 
-for row in main_guard.trace_grid:
-    for cell in row:
-        if cell == set(): cell.add('.')
+visited_pos = set()
+for (x, y, _) in main_guard.trace - {(start[0], start[1], '^')}: visited_pos.add((x, y))
+timelines = []
+for (x, y) in visited_pos:
+    timeline = [list(row) for row in map_grid]
+    timeline[y][x] = '#'
+    timelines.append(timeline)
 
-with open('debug.txt', 'w') as file:
-    for line in main_guard.trace_grid:
-        for c in line:
-            file.write(c.pop())
-        file.write('\n')
+def test_timeline(timeline):
+    temp_guard = guard(start, 0)
+    return temp_guard.patrol(timeline)
 
-output = len(obs_positions)
+results = list(ProcessPoolExecutor().map(test_timeline, timelines))
+output = results.count(True)
 
 print(output)
