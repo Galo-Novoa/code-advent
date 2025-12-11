@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from shared.io import matrixread
 
-matrix = matrixread('db.txt')
+matrix = matrixread('input.txt')
 
 output = 0
 

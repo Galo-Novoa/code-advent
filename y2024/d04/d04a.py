@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from shared.io import textread
 
-soup = textread('db.txt')
+soup = textread('input.txt')
 directions = {(x, y) for x in range(-1, 2) for y in range(-1, 2)} - {(0, 0)}
 word = 'XMAS'
 output = 0

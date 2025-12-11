@@ -3,10 +3,10 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from collections import defaultdict
-from itertools import product
+
 from shared.io import textread
 
-map_grid = textread('db.txt')
+map_grid = textread('input.txt')
 
 antinodes = set()
 antennas = defaultdict(set)
@@ -15,18 +15,19 @@ for y, line in enumerate(map_grid):
     for x, c in enumerate(line):
         if c != '.': antennas[c].add((x, y))
 
-map_range = {pos for pos in product(range(len(map_grid[0])), range(len(map_grid)))}
+def in_grid(pos): return pos[0] in range(len(map_grid[0])) and pos[1] in range(len(map_grid))
 
-def sub_pos(p1, p2): return (p1[0] - p2[0], p1[1] - p2[1])
+def get_dist(p1, p2): return (p1[0] - p2[0], p1[1] - p2[1])
 
 for freq in antennas:
-    for p1 in antennas[freq]:
-        for p2 in antennas[freq] - {p1}:
-            dist = sub_pos(p1, p2)
-            ant = p2
-            while ant in map_range:
-                antinodes.add(ant)
-                ant = sub_pos(ant, dist)
+    while antennas[freq]:
+        p1 = antennas[freq].pop()
+        for p2 in antennas[freq]:
+            dx, dy = get_dist(p1, p2)
+            an1 = (p1[0] + dx, p1[1] + dy)
+            an2 = (p2[0] - dx, p2[1] - dy)
+            if in_grid(an1): antinodes.add(an1)
+            if in_grid(an2): antinodes.add(an2)
 
 with open('debug.txt', 'w') as file:
     for y, line in enumerate(map_grid):
@@ -37,5 +38,3 @@ with open('debug.txt', 'w') as file:
 
 output = len(antinodes)
 print(output)
-
-# Velocidad sin debug: 2.8 ms B)

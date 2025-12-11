@@ -1,5 +1,6 @@
+import sys
+import os
 import re
-import math
 
 def mulparse(filename):
     with open(filename, 'r') as file:
@@ -7,9 +8,17 @@ def mulparse(filename):
         parse = [do if do else (int(a), int(b)) for a, b, do in re.findall(regex, file.read())]
     return parse
 
-text = mulparse('db.txt')
+text = mulparse('input.txt')
+muls = []
+toggle = True
 
-muls = [math.prod(item) for item in text if isinstance(item, tuple)]
+for item in text:
+    if isinstance(item, tuple) and toggle:
+        a, b = item
+        muls.append(a * b)
+        continue
+    if item == 'do()': toggle = True
+    else: toggle = False
 
 output = sum(muls)
 

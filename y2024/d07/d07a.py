@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from shared.io import dictread
 
-data = dictread('db.txt')
+data = dictread('input.txt')
 ops = {'+': operator.add, '*': operator.mul}
 
 def analyze(combination, operands):

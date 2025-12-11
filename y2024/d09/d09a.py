@@ -1,4 +1,4 @@
-with open('db.txt', 'r') as file:
+with open('input.txt', 'r') as file:
     disk = [int(c) for c in file.read().strip()]
 
 files = disk[::2]

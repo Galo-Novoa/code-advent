@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from shared.io import textread
 
-soup = textread('db.txt')
+soup = textread('input.txt')
 directions = [(-1, 1), (1, 1), (1, -1), (-1, -1)]
 unwraps = [''.join(x) for x in permutations('MMSS') if ''.join(x) not in ('MSMS', 'SMSM')]
 output = 0

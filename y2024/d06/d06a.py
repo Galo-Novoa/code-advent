@@ -10,7 +10,7 @@ def next_pos(position, pointing):
     dx, dy = directions[pointing % 4]
     return (x+dx, y-dy)
 
-grid = [list(row) for row in textread('db.txt')]
+grid = [list(row) for row in textread('input.txt')]
 directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
 obs_positions = set()

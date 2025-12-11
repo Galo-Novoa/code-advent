@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from shared.io import splitpage
 
-raw_rules, raw_updates = splitpage('db.txt')
+raw_rules, raw_updates = splitpage('input.txt')
 
 rules = [tuple(map(int, t)) for t in (r.split('|') for r in raw_rules)]
 updates = [list(map(int, t)) for t in (u.split(',') for u in raw_updates)]

@@ -1,12 +1,11 @@
 import sys
 import os
 import operator
-from itertools import product
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from shared.io import dictread
 
-data = dictread('db.txt')
+data = dictread('input.txt')
 
 def concat(a, b):
     digits = 1
@@ -16,21 +15,22 @@ def concat(a, b):
         temp //= 10
     return a * digits + b
 
-ops = {'+': operator.add, '*': operator.mul, '|': concat}
+ops = {operator.add, concat, operator.mul}
 
-def analyze(combination, operands):
+def analyze(result, operands):
         acc = operands[0]
-        for op, c in zip(operands[1:], combination):
-            acc = ops[c](acc, op)
-        return acc
+        n = len(operands)
+        for c in ops:
+            i = 0
+            acc = c(acc, operands[i])
+            if acc > result: break
+        return 
 
 output = 0
 for result, operands in data.items():
-    combinations = product('+*|', repeat=len(operands) - 1)
-    for comb in combinations:
-        if analyze(comb, operands) == result:
-            output += result
-            break
+    if analyze(result, operands) == result:
+        output += result
+        break
 
 print(output)
 

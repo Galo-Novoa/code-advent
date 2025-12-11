@@ -7,7 +7,7 @@ from shared.io import textread
 
 directions = {'int': [(0, 1), (1, 0), (0, -1), (-1, 0)], 'str':['^', '>', 'v', '<']}
 
-map_grid = [list(row) for row in textread('db.txt')]
+map_grid = [list(row) for row in textread('input.txt')]
 
 map_size = {'y': range(len((map_grid))), 'x': range(len(map_grid[0]))}
 
