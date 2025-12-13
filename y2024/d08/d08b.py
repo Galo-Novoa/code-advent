@@ -15,7 +15,7 @@ for y, line in enumerate(map_grid):
     for x, c in enumerate(line):
         if c != '.': antennas[c].add((x, y))
 
-map_range = {pos for pos in product(range(len(map_grid[0])), range(len(map_grid)))}
+map_range = set(product(range(len(map_grid[0])), range(len(map_grid))))
 
 def sub_pos(p1, p2): return (p1[0] - p2[0], p1[1] - p2[1])
 
