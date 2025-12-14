@@ -38,7 +38,7 @@ print(output)
 
 """
 
-# versión más rápida que me hizo la IA con memoización (2s)
+# versión más rápida que me hizo la IA (2s)
 
 def can_reach(result, operands):
     n = len(operands)
