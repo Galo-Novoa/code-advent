@@ -1,6 +1,6 @@
 import sys
 import os
-import operator
+from operator import add, mul
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from shared.io import dictread
@@ -15,45 +15,25 @@ def concat(a, b):
         temp //= 10
     return a * digits + b
 
-ops = {operator.add, concat, operator.mul}
+ops = [mul, concat, add]
 
 def analyze(result, operands):
-        acc = operands[0]
-        n = len(operands)
-        for c in ops:
-            i = 0
-            acc = c(acc, operands[i])
-            if acc > result: break
-        return 
+    n = len(operands)
+    
+    def branch(acc, i):
+        if acc > result: return False
+        if i == n:
+            return acc == result
+        for operation in ops:
+            if branch(operation(acc, operands[i]), i + 1):
+                return True
+        return False
+    
+    return branch(operands[0], 1)
 
-output = 0
-for result, operands in data.items():
-    if analyze(result, operands) == result:
-        output += result
-        break
+output = sum(result for result, operands in data.items() if analyze(result, operands))
 
 print(output)
 
-# versión que hice (10s)
-
-"""
-
-# versión más rápida que me hizo la IA (2s)
-
-def can_reach(result, operands):
-    n = len(operands)
-
-    def dfs(i, acc):
-        if i == n:
-            return acc == result
-        for op in ops:
-            if dfs(i + 1, ops[op](acc, operands[i])):
-                return True
-        return False
-
-    return dfs(1, operands[0])
-
-for result, operands in data.items():
-    if can_reach(result, tuple(operands)):
-        output += result
-"""
+# originalmente 10s con iteración sobre producto cartesiano
+# ahora 1s con recursión que me enseñó la IA
